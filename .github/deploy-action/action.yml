@@ -2,7 +2,7 @@ name: 16 Deploy Action
 description: Deploy Action
 
 runs:
-  using: Checkout repo
+  using: composite
   steps:
     - name: Checkout repo
       uses: actions/checkout@v6
