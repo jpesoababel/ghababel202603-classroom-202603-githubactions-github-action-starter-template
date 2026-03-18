@@ -3,7 +3,7 @@ on:
     workflow_dispatch:
 jobs:
     mainDeploy:      
-        uses: ./.github/workflows/16-1-reusable-workflow.yaml
+        uses: jpesoababel/Reusable-Workflow/.github/workflows/16-1-reusable-workflow.yaml@main
         with:
             target-directory: 'src'
     print-outputs:       
