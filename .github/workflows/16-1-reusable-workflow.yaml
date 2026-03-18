@@ -1,0 +1,40 @@
+name: 16 - 1 - Reusable Workflows - Reusable Definition.
+on: 
+    workflow_call:
+        inputs:
+            target-directory:
+                description: 'The directory to build'
+                required: true
+                type: string       
+        outputs:
+            build-status:
+                description: 'The status of the build process'
+                value: ${{ jobs.deploy.outputs.build-status }}
+            url:
+                description: 'The url of the deployed version'
+                value: ${{ jobs.deploy.outputs.url }}
+jobs:
+    deploy:
+        continue-on-error: true
+        runs-on: ubuntu-latest
+        outputs:
+            build-status: ${{ steps.build.outputs.build_status }}
+            url: ${{ steps.deploy.outputs.url }}
+        steps:   
+            - name: Checkout repo
+              uses: actions/checkout@v6
+
+            - name: Build
+              id: build
+              run: |
+                echo "Building using directory ${{inputs.target-directory}}"
+                echo build_status=failed >> $GITHUB_OUTPUT
+
+            - name: Deploy
+              id: deploy
+              run: |
+                echo "Deploying build artifacts"
+                echo url=https://www.babel.com >> $GITHUB_OUTPUT
+            - name: Fail at End
+              run: exit -1
+                  
